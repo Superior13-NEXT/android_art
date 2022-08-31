@@ -185,6 +185,7 @@ art_cc_defaults {
     whole_program_vtables: true, // Requires LTO
 
     export_include_dirs: ["."],
+    version_script: "libart-compiler.map",
 }
 
 cc_defaults {
@@ -508,11 +509,12 @@ art_cc_test {
     ],
     shared_libs: [
         "libprofiled",
-        "libartd-compiler",
         "libartd-simulator-container",
+        "liblzma",
     ],
     static_libs: [
         "libvixld",
+        "libartd-compiler",
     ],
 }
 
@@ -526,7 +528,8 @@ art_cc_test {
     data: [":generate-boot-image"],
     shared_libs: [
         "libprofile",
-        "libart-compiler",
+        "liblzma",
+        "libartpalette",
     ],
     static_libs: [
         // For now, link `libart-simulator-container` statically for simplicity,
@@ -536,6 +539,7 @@ art_cc_test {
         // dynamically.
         "libart-simulator-container",
         "libvixl",
+        "libart-compiler",
     ],
     test_config: "art_standalone_compiler_tests.xml",
 }
@@ -568,9 +572,10 @@ art_cc_test {
         },
     },
     shared_libs: [
-        "libartd-compiler",
+        "liblzma",
     ],
     static_libs: [
+        "libartd-compiler",
         "libvixld",
     ],
 }
